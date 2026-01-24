@@ -1,0 +1,245 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    --primary: 0 0% 12%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 12%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 12%;
+
+    --radius: 0.5rem;
+
+    /* Game-specific colors */
+    --tile-empty: 0 0% 100%;
+    --tile-empty-border: 0 0% 82%;
+    --tile-filled-border: 0 0% 55%;
+    --tile-correct: 142 70% 45%;
+    --tile-misplaced: 45 93% 58%;
+    --tile-incorrect: 0 0% 47%;
+    
+    --key-bg: 0 0% 85%;
+    --key-text: 0 0% 12%;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 7%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 83%;
+
+    /* Game-specific colors - dark mode */
+    --tile-empty: 0 0% 7%;
+    --tile-empty-border: 0 0% 25%;
+    --tile-filled-border: 0 0% 50%;
+    --tile-correct: 142 70% 45%;
+    --tile-misplaced: 45 93% 47%;
+    --tile-incorrect: 0 0% 35%;
+    
+    --key-bg: 0 0% 50%;
+    --key-text: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Dynamic tile sizes based on word length */
+  .tile-lg .tile {
+    @apply w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] text-3xl sm:text-4xl;
+  }
+  
+  .tile-md .tile {
+    @apply w-14 h-14 sm:w-16 sm:h-16 text-2xl sm:text-3xl;
+  }
+  
+  .tile-sm .tile {
+    @apply w-12 h-12 sm:w-14 sm:h-14 text-xl sm:text-2xl;
+  }
+  
+  .tile-xs .tile {
+    @apply w-10 h-10 sm:w-12 sm:h-12 text-lg sm:text-xl;
+  }
+
+  .tile {
+    @apply w-14 h-14 sm:w-16 sm:h-16 border-2 flex items-center justify-center text-2xl sm:text-3xl font-bold uppercase select-none rounded-sm;
+    background-color: hsl(var(--tile-empty));
+    border-color: hsl(var(--tile-empty-border));
+    transition: transform 0.1s ease, background-color 0.1s ease;
+  }
+
+  .tile-filled {
+    border-color: hsl(var(--tile-filled-border));
+    animation: tile-pop 0.1s ease;
+  }
+
+  .tile-correct {
+    background-color: hsl(var(--tile-correct));
+    border-color: hsl(var(--tile-correct));
+    color: white;
+  }
+
+  .tile-misplaced {
+    background-color: hsl(var(--tile-misplaced));
+    border-color: hsl(var(--tile-misplaced));
+    color: white;
+  }
+
+  .tile-incorrect {
+    background-color: hsl(var(--tile-incorrect));
+    border-color: hsl(var(--tile-incorrect));
+    color: white;
+  }
+
+  .tile-reveal {
+    animation: tile-flip 0.5s ease forwards;
+  }
+
+  .tile-shake {
+    animation: tile-shake 0.5s ease;
+  }
+
+  .tile-bounce {
+    animation: tile-bounce 0.5s ease forwards;
+  }
+
+  .key {
+    @apply flex items-center justify-center font-semibold uppercase rounded-md select-none cursor-pointer;
+    background-color: hsl(var(--key-bg));
+    color: hsl(var(--key-text));
+    min-width: 2.5rem;
+    height: 3.5rem;
+    font-size: 0.8rem;
+    transition: all 0.1s ease;
+  }
+
+  .key:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  .key:active {
+    transform: scale(0.98);
+  }
+
+  .key-wide {
+    min-width: 4rem;
+    font-size: 0.7rem;
+  }
+
+  .key-correct {
+    background-color: hsl(var(--tile-correct));
+    color: white;
+  }
+
+  .key-misplaced {
+    background-color: hsl(var(--tile-misplaced));
+    color: white;
+  }
+
+  .key-incorrect {
+    background-color: hsl(var(--tile-incorrect));
+    color: white;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  @keyframes tile-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes tile-flip {
+    0% { transform: rotateX(0deg); }
+    50% { transform: rotateX(90deg); }
+    100% { transform: rotateX(0deg); }
+  }
+
+  @keyframes tile-shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+
+  @keyframes tile-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes confetti-fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+}
