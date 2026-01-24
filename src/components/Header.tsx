@@ -1,5 +1,5 @@
 import { RotateCcw, HelpCircle } from 'lucide-react';
-import logo from "/public/logo.png";
+import logo from "/logo.png";
 import { Difficulty } from '@/lib/wordnik';
 import { cn } from '@/lib/utils';
 
