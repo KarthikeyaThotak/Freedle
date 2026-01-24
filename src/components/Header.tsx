@@ -1,7 +1,9 @@
-import { RotateCcw, HelpCircle } from 'lucide-react';
+import { RotateCcw, HelpCircle, Moon, Sun } from 'lucide-react';
 import logo from "/logo.png";
 import { Difficulty } from '@/lib/wordnik';
 import { cn } from '@/lib/utils';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 interface HeaderProps {
   onNewGame: () => void;
@@ -12,17 +14,44 @@ interface HeaderProps {
 }
 
 export function Header({ onNewGame, onHelp, onEasy, onHard, currentDifficulty }: HeaderProps) {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
   return (
     <header className="w-full border-b border-border">
       <div className="max-w-lg mx-auto px-4 py-3">
         <div className="flex items-center justify-between mb-2">
-          <button
-            onClick={onHelp}
-            className="p-2 rounded-full hover:bg-secondary transition-colors"
-            aria-label="How to play"
-          >
-            <HelpCircle className="w-6 h-6 text-muted-foreground" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={onHelp}
+              className="p-2 rounded-full hover:bg-secondary transition-colors"
+              aria-label="How to play"
+            >
+              <HelpCircle className="w-6 h-6 text-muted-foreground" />
+            </button>
+            {mounted && (
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-full hover:bg-secondary transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-6 h-6 text-muted-foreground" />
+                ) : (
+                  <Moon className="w-6 h-6 text-muted-foreground" />
+                )}
+              </button>
+            )}
+          </div>
           
           <h1 className="text-3xl font-extrabold tracking-tight flex items-center justify-center">
             <img src={logo} alt="Freedle" className="h-10 w-auto object-contain" />
