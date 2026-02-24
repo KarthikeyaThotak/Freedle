@@ -24,9 +24,9 @@ export function Keyboard({ keyboardState, onKeyPress, disabled }: KeyboardProps)
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="w-full flex flex-col items-center gap-1.5 sm:gap-2">
       {KEYBOARD_ROWS.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex gap-1.5">
+        <div key={rowIndex} className="w-full flex justify-center gap-1">
           {row.map((key) => (
             <button
               key={key}

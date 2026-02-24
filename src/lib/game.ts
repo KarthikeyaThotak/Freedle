@@ -1,3 +1,5 @@
+import { DifficultyLevel } from '@/lib/managers/DifficultyManager';
+
 export type LetterState = 'empty' | 'filled' | 'correct' | 'misplaced' | 'incorrect';
 
 export interface TileData {
@@ -9,6 +11,8 @@ export interface TileData {
 
 export interface GameState {
   targetWord: string;
+  difficulty: DifficultyLevel;
+  maxAttempts: number;
   wordLength: number;
   guesses: TileData[][];
   currentRow: number;

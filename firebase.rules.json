@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "rooms": {
+      "$roomId": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.hasChildren(['hostId','config','guesses','status','createdAt','updatedAt','members']) && newData.child('hostId').isString() && (!data.exists() || newData.child('hostId').val() === data.child('hostId').val()) && newData.child('config').hasChildren(['targetWord','difficulty','wordLength','maxAttempts']) && newData.child('config/targetWord').isString() && newData.child('config/wordLength').isNumber() && newData.child('config/maxAttempts').isNumber() && newData.child('guesses').childrenCount() <= newData.child('config/maxAttempts').val() && (newData.child('status').val() === 'playing' || newData.child('status').val() === 'won' || newData.child('status').val() === 'lost')"
+      }
+    }
+  }
+}

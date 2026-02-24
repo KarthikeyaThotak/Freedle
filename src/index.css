@@ -98,6 +98,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
   }
 }
 
@@ -165,10 +166,11 @@
     @apply flex items-center justify-center font-semibold uppercase rounded-md select-none cursor-pointer;
     background-color: hsl(var(--key-bg));
     color: hsl(var(--key-text));
-    min-width: 2.5rem;
-    height: 3.5rem;
-    font-size: 0.8rem;
+    min-width: clamp(1.7rem, 8vw, 2.5rem);
+    height: clamp(2.9rem, 10vw, 3.5rem);
+    font-size: clamp(0.65rem, 2.3vw, 0.8rem);
     transition: all 0.1s ease;
+    padding-inline: 0.25rem;
   }
 
   .key:hover {
@@ -181,8 +183,8 @@
   }
 
   .key-wide {
-    min-width: 4rem;
-    font-size: 0.7rem;
+    min-width: clamp(2.9rem, 13vw, 4rem);
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
   }
 
   .key-correct {

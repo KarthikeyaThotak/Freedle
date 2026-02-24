@@ -19,11 +19,12 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
         </DialogHeader>
         
         <div className="space-y-4 text-foreground">
-          <p>Guess the <strong>FREEDLE</strong> in 6 tries.</p>
+          <p>Guess the <strong>FREEDLE</strong> within the allowed attempts for your chosen mode.</p>
           
           <ul className="space-y-2 text-sm">
-            <li>• Each guess must be a valid 5-letter word.</li>
+            <li>• Each guess must match your selected word length.</li>
             <li>• The color of the tiles will change to show how close your guess was.</li>
+            <li>• Easy = 4 letters, Medium = 5 letters, Hard = 6+ letters with fewer attempts.</li>
           </ul>
           
           <div className="space-y-3">

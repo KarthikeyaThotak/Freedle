@@ -4,6 +4,47 @@ A modern, feature-rich word guessing game inspired by Wordle. Guess the word by 
 
 ## 🎯 Features
 
+## ✅ Production Upgrade Highlights
+
+- **Structured Difficulty System**
+   - Easy: 4 letters, 6 attempts, common vocabulary
+   - Medium: 5 letters, 6 attempts, moderate vocabulary
+   - Hard: 6/7 letters, 5 attempts, rare vocabulary
+- **Pre-Game Level Selection Screen** for mode + length setup
+- **Dynamic Grid + Keyboard Scaling** for 4, 5, 6, and 7+ letter words
+- **Persistent Player Stats (localStorage)**
+   - Games played/won, win %, current/max streak, average guesses
+   - Breakdown by difficulty and word length
+- **Hint System**
+   - Meaning hint, category hint, reveal-letter hint (costs 1 attempt)
+- **Multiplayer Stage 1 (Shareable Challenge Link)**
+   - URL-encoded same-word challenge for manual result comparison
+- **Multiplayer Stage 2 (Realtime Co-op Rooms)**
+   - Firebase-backed live shared board solving with room join links
+- **Mobile-First Layout Refactor**
+   - Sticky keyboard, no horizontal scroll, improved small-screen spacing
+
+## 🧱 Architecture (Modular Managers)
+
+Core logic is now split into scalable managers:
+
+- `src/lib/managers/DifficultyManager.ts`
+- `src/lib/managers/WordEngine.ts`
+- `src/lib/managers/GameStateManager.ts`
+- `src/lib/managers/StatsManager.ts`
+- `src/lib/managers/HintManager.ts`
+- `src/lib/managers/MultiplayerManager.ts`
+
+Main orchestration happens in:
+
+- `src/hooks/useFreedleGame.ts`
+
+UI additions:
+
+- `src/components/LevelSelection.tsx`
+- `src/components/StatsModal.tsx`
+- `src/components/HintPanel.tsx`
+
 ### Core Gameplay
 - **Dynamic Word Length**: Grid automatically adjusts to match the word length
 - **Real-time Feedback**: Color-coded tiles show correct, misplaced, and incorrect letters
@@ -47,6 +88,60 @@ npm run dev
 ```
 
 4. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
+
+## 🧪 Testing New Systems
+
+1. Start app and verify level-selection appears before game board
+2. Try each difficulty and confirm allowed word lengths and attempt limits
+3. Complete/lose games and open **Stats** to confirm updates persist after refresh
+4. Use **Hints**:
+   - Meaning and category hints
+   - Reveal-letter hint should consume one attempt
+5. Click **Share** to generate/copy a challenge link and open it in a new tab
+6. Verify mobile layout in DevTools (iPhone + Android presets):
+   - Keyboard stays visible/sticky
+   - No overlap and no horizontal scrolling
+
+## 🌐 Realtime Co-op Multiplayer (Stage 2)
+
+Freedle now supports **live co-op solving** with Firebase Realtime Database.
+
+### Setup
+
+1. Create a Firebase project
+2. Enable **Realtime Database** (test mode for local development)
+3. Copy `.env.example` to `.env.local`
+4. Fill in all `VITE_FIREBASE_*` values
+
+```bash
+cp .env.example .env.local
+```
+
+5. Restart dev server
+
+### How Co-op Works
+
+- Start any game, then click **Create Co-op Room**
+- A room link is copied to clipboard
+- Teammates join with that link (or room ID)
+- All players submit guesses to the **same shared board** in real-time
+- Member panel shows connected players and guesses submitted
+- Room host can trigger **Start New Round** to reset the shared board for everyone
+
+### Firebase Rules
+
+- Rules file: `firebase.rules.json`
+- Deploy with Firebase CLI:
+
+```bash
+firebase deploy --only database
+```
+
+### Notes
+
+- Reveal-letter hint is disabled in co-op mode to keep room state consistent
+- Stage 1 challenge links still work independently for async comparison mode
+- Host-only new round is enforced in app logic and backed by immutable `hostId` room metadata
 
 ## 🎮 How to Play
 
